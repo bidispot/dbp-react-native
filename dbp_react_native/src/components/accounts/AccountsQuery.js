@@ -107,7 +107,6 @@ const ALL = 'ALL';
 
 const styles = StyleSheet.create({
   row: {
-    flex: 1,
     flexDirection: 'row',
     justifyContent: 'center',
     alignItems: 'center',
@@ -118,22 +117,14 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     padding: 4
   },
-  label: {
-    flex: 1,
-    alignItems: 'flex-start',
-  },
   field: {
-    flex: 3,
+    flex: 1,
     alignItems: 'center'
-  },
-  labelText: {
-    color: '#333'
   },
   inputText: {
     color: '#333',
     textAlign: 'left',
-    alignItems: 'flex-start',
-    fontSize: 16
+    fontSize: 16,
   },
   dropdown: {
     alignSelf: 'stretch',
@@ -141,6 +132,8 @@ const styles = StyleSheet.create({
   },
   input: {
     height: 40,
+    flex: 1,
+    alignSelf: 'stretch',
     borderColor: '#999',
     borderWidth: 1,
     borderRadius: 4,

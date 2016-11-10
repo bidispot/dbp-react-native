@@ -119,6 +119,8 @@ const styles = StyleSheet.create({
     justifyContent: 'center'
   },
   input: {
+    flex: 1,
+    alignSelf: 'stretch',
     height: 40,
     borderColor: '#999',
     borderWidth: 1,

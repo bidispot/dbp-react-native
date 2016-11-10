@@ -18,9 +18,11 @@ For Android:
 
 Make sure Android build tools version 23.0.1 are installed.
 
-Check which versions are installed in the Android SDK folder: \android-sdk\build-tools
+Check which versions are installed in the Android SDK folder: '/android-sdk/build-tools' (or ~/Library/Android/sdk/build-tools)
 
-If version 23.0.1 is missing, then install it from the SDK manager: \android-sdk\tools\android
+If version 23.0.1 is missing, then install it from the SDK manager: '\android-sdk\tools\android'
+
+Create a new vitual device from the AVD manager (e.g. '\android-sdk\tools\android avd') or use Genymotion (do not forget to configure the sdk).
 
 Then execute the following to install the APK on an external device (by default adb will reverse the ports 8081)
 
@@ -30,3 +32,4 @@ In case of issues with "BatchedBridge", please execute the following command fro
 
 `node node_modules/react-native/local-cli/cli.js bundle --platform android --dev true --reset-cache --entry-file index.android.js --bundle-output ./android/app/build/intermediates/assets/debug/index.android.bundle --assets-dest ./android/app/build/intermediates/res/merged/debug`
 
+Then type: `./gradlew installDebug`
