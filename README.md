@@ -10,11 +10,15 @@ From the project root folder, launch the node server:
 
 `react-native start`
 
+# **iOS:**
+
 For starting the iOS simulator, execute:
 
 `react-native run-ios`
 
-For Android:
+![Alt text](./screenshots/ios.png?raw=true "iOS version")
+
+# **Android:**
 
 Make sure Android build tools version 23.0.1 are installed.
 
@@ -27,6 +31,8 @@ Create a new vitual device from the AVD manager (e.g. '\android-sdk\tools\androi
 Then execute the following to install the APK on an external device (by default adb will reverse the ports 8081)
 
 `react-native run-android`
+
+![Alt text](./screenshots/android.png?raw=true "Android version")
 
 In case of issues with "BatchedBridge", please execute the following command from the project folder "dbp_react_native":
 
