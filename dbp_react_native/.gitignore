@@ -41,4 +41,5 @@ android/app/libs
 android/keystores/debug.keystore
 
 .history/
+.vscode/
 *.log
