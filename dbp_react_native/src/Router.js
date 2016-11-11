@@ -39,7 +39,7 @@ export default class RouterComponent extends Component {
                 titleStyle={styles.title}
                 title='Accounts'
                 drawerImage={require('../assets/img/menu_icon.png')}
-                initial
+                //initial
               />
               <Scene 
                 key='balances'
@@ -49,6 +49,7 @@ export default class RouterComponent extends Component {
                 titleStyle={styles.title}
                 title='Balances'
                 drawerImage={require('../assets/img/menu_icon.png')}
+                initial
               />
             </Scene>
           </Scene>

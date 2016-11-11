@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
-import { ScrollView, StyleSheet, View, TextInput } from 'react-native';
+import { ActivityIndicator, ScrollView, StyleSheet, View, TextInput } from 'react-native';
 import { connect } from 'react-redux';
+import DatePicker from 'react-native-datepicker';
 import dateUtils from '../../utils/dates';
 import { queryBalances } from '../../actions';
 import { getCashBalancesQueryParameters, getIsCashBalancesQuerying } from '../../selectors';
@@ -41,15 +42,23 @@ class Balances extends Component {
   }
 
   onDateFromParameterChange(date) {
-    this.setState({ 
+    this.setState({
       paramDateFrom: dateUtils.convertToUTCStartOfDay(dateUtils.parseDateToMillis(date))
     });
   }
 
   onDateToParameterChange(date) {
-    this.setState({ 
-      paramDateTo: dateUtils.convertToUTCEndOfDay(dateUtils.parseDateToMillis(date)) 
+    console.log(date, dateUtils.convertToUTCEndOfDay(dateUtils.parseDateToMillis(date)));
+    this.setState({
+      paramDateTo: dateUtils.convertToUTCEndOfDay(dateUtils.parseDateToMillis(date))
     });
+  }
+
+  getQueryButtonIcon() {
+    if (this.props.isQuerying) {
+      return (<ActivityIndicator style={styles.activity_query} color='#fff' animating />);
+    }
+    return ('Query');
   }
 
   buildQueryParametersFromLocalState() {
@@ -64,7 +73,7 @@ class Balances extends Component {
     return (
       <View>
         <ScrollView>
-          <View style={styles.row}>
+          <View style={[styles.row]}>
             <View style={styles.field}>
               <TextInput
                 style={[styles.inputText, styles.input]}
@@ -74,15 +83,69 @@ class Balances extends Component {
               />
             </View>
           </View>
+          <View style={[styles.row]}>
+            <DatePicker
+              style={[styles.dropdown]}
+              date={dateUtils.formatDate(dateUtils.convertDateFromMillis(this.state.paramDateFrom),
+                DATE_FORMAT)}
+              mode="date"
+              placeholder="From"
+              format={DATE_FORMAT}
+              minDate="06-Sep-2016"
+              maxDate="22-Sep-2016"
+              confirmBtnText="Confirm"
+              cancelBtnText="Cancel"
+              customStyles={{
+                dateIcon: {
+                  position: 'absolute',
+                  left: 0,
+                  top: 4,
+                  marginLeft: 0
+                },
+                dateInput: {
+                  //marginLeft: 36
+                }
+              }}
+              onDateChange={this.onDateFromParameterChange}
+            />
+          </View>
+          <View style={[styles.row]}>
+            <DatePicker
+              style={[styles.dropdown]}
+              date={dateUtils.formatDate(dateUtils.convertDateFromMillis(this.state.paramDateTo),
+                DATE_FORMAT)}
+              mode="date"
+              placeholder="To"
+              format={DATE_FORMAT}
+              minDate="06-Sep-2016"
+              maxDate="22-Sep-2016"
+              confirmBtnText="Confirm"
+              cancelBtnText="Cancel"
+              customStyles={{
+                dateIcon: {
+                  position: 'absolute',
+                  left: 0,
+                  top: 4,
+                  marginLeft: 0
+                },
+                dateInput: {
+                  //marginLeft: 36
+                }
+              }}
+              onDateChange={this.onDateToParameterChange}
+            />
+          </View>
         </ScrollView>
         <View style={styles.buttons}>
-          <Button onPress={this.onQuerySubmit} main>Query</Button>
+          <Button onPress={this.onQuerySubmit} main>{this.getQueryButtonIcon()}</Button>
           <Button onPress={this.onQueryReset}>Reset</Button>
         </View>
       </View>
     );
   }
 }
+
+const DATE_FORMAT = 'DD-MMM-YYYY';
 
 const styles = StyleSheet.create({
   row: {
@@ -95,7 +158,8 @@ const styles = StyleSheet.create({
   },
   buttons: {
     flexDirection: 'row',
-    margin: 4
+    margin: 4,
+    paddingTop: 16
   },
   label: {
     flex: 1,
@@ -115,6 +179,7 @@ const styles = StyleSheet.create({
     fontSize: 16
   },
   dropdown: {
+    flex: 1,
     alignSelf: 'stretch',
     justifyContent: 'center'
   },
@@ -124,8 +189,14 @@ const styles = StyleSheet.create({
     height: 40,
     borderColor: '#999',
     borderWidth: 1,
-    borderRadius: 4,
     padding: 5
+  },
+  activity_query: { 
+    width: 30, 
+    height: 30,
+    alignItems: 'center',
+    justifyContent: 'center',
+    paddingTop: 8
   }
 });
 

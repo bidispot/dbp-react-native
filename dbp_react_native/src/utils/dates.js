@@ -16,9 +16,18 @@ const convertDateFromMillis = (date) => {
   return (date != null ? new Date(date).toISOString() : null);
 };
 
+const formatDate = (date, format) => {
+  if (date == null || date === undefined || date === '' || format == null 
+    || format === undefined || format === '') {
+    return '';
+  }
+  return moment(date).format(format);
+};
+
 export default {
   parseDateToMillis,
   convertToUTCStartOfDay,
   convertToUTCEndOfDay,
-  convertDateFromMillis
+  convertDateFromMillis,
+  formatDate
 };

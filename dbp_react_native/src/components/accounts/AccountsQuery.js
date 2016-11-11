@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { ScrollView, StyleSheet, View, TextInput, Picker } from 'react-native';
+import { ActivityIndicator, ScrollView, StyleSheet, View, TextInput, Picker } from 'react-native';
 import { connect } from 'react-redux';
 import { queryAccounts } from '../../actions';
 import { getAccountsQueryParameters, getIsAccountsQuerying } from '../../selectors';
@@ -46,6 +46,13 @@ class Accounts extends Component {
 
   onCurrencyParameterChange(paramCurrency) {
     this.setState({ paramCurrency });
+  }
+
+  getQueryButtonIcon() {
+    if (this.props.isQuerying) {
+      return (<ActivityIndicator style={styles.activity_query} color='#fff' animating />);
+    }
+    return ('Query');
   }
 
   buildQueryParametersFromLocalState() {
@@ -95,7 +102,7 @@ class Accounts extends Component {
           </View>
         </ScrollView>
         <View style={styles.buttons}>
-          <Button onPress={this.onQuerySubmit} main>Query</Button>
+          <Button onPress={this.onQuerySubmit} main>{this.getQueryButtonIcon()}</Button>
           <Button onPress={this.onQueryReset}>Reset</Button>
         </View>
       </View>
@@ -115,7 +122,8 @@ const styles = StyleSheet.create({
   },
   buttons: {
     flexDirection: 'row',
-    padding: 4
+    padding: 4,
+    paddingTop: 16
   },
   field: {
     flex: 1,
@@ -136,8 +144,14 @@ const styles = StyleSheet.create({
     alignSelf: 'stretch',
     borderColor: '#999',
     borderWidth: 1,
-    borderRadius: 4,
     padding: 5
+  },
+  activity_query: { 
+    width: 30, 
+    height: 30,
+    alignItems: 'center',
+    justifyContent: 'center',
+    paddingTop: 8
   }
 });
 

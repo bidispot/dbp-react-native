@@ -42,7 +42,7 @@ const styles = StyleSheet.create({
     borderRadius: 4,
   },
   cardList: {
-    flex: 2,
+    flex: 1,
   },
   cardTitle: {
     height: 40,
