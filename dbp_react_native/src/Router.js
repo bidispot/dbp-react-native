@@ -9,7 +9,7 @@ import Balances from './components/balances/Balances.js';
 const reducerCreate = params => {
   const defaultReducer = new Reducer(params);
   return (state, action) => {
-    console.log('ACTION:', action);
+    //console.log('ACTION:', action);
     return defaultReducer(state, action);
   };
 };
@@ -29,7 +29,7 @@ export default class RouterComponent extends Component {
                 titleStyle={styles.title}
                 title='Dashboard'
                 drawerImage={require('../assets/img/menu_icon.png')}
-                //initial
+                initial
               />
               <Scene 
                 key='accounts'
@@ -49,7 +49,7 @@ export default class RouterComponent extends Component {
                 titleStyle={styles.title}
                 title='Balances'
                 drawerImage={require('../assets/img/menu_icon.png')}
-                initial
+                //initial
               />
             </Scene>
           </Scene>

@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { StyleSheet, ListView, ScrollView, View, Text } from 'react-native';
+import { StyleSheet, ListView, ScrollView, View, Text, TouchableHighlight } from 'react-native';
 import { connect } from 'react-redux';
 import { getFavoriteAccount, getAccountsQueryResults } from '../../selectors';
 import { selectFavoriteAccount } from '../../actions';
@@ -8,9 +8,7 @@ class AccountsList extends Component {
 
   constructor(props) {
     super(props);
-
     this.state = { showModal: false };
-
     this.onSelectRow = this.onSelectRow.bind(this);
     this.openModal = this.openModal.bind(this);
     this.closeModal = this.closeModal.bind(this);
@@ -19,7 +17,6 @@ class AccountsList extends Component {
   }
 
   onSelectRow(row) {
-    this.openModal(row);
     this.props.selectFavoriteAccount(row);
   }
 
@@ -34,10 +31,16 @@ class AccountsList extends Component {
   displayFavoriteAccount() {
     if (this.props.favoriteAccount) {
       return (
-        <Text>Favorite account: {this.props.favoriteAccount.name}</Text>
+        <Text style={styles.defaultText}>
+          Your favorite account: {this.props.favoriteAccount.name}
+        </Text>
       );
     }
-    return '';
+    return (
+      <Text style={styles.defaultText}>
+        No favorite account has been selected yet.
+      </Text>
+    );
   }
 
   asJson() {
@@ -70,13 +73,17 @@ class AccountsList extends Component {
     if (!this.props.results || this.props.results.size === 0) {
       return (
         <View>
-          <Text>No rows available</Text>
+          {this.displayFavoriteAccount()}
+          <Text style={styles.defaultText}>No rows available</Text>
         </View>
       );
     }
 
     return (
       <View style={styles.main}>
+        <View>
+          {this.displayFavoriteAccount()}
+        </View>
         <View style={[styles.section, styles.row]}>
           <Text style={[styles.accountid, styles.sectionText]}>Account id</Text>
           <Text style={[styles.accountname, styles.sectionText]}>Account name</Text>
@@ -87,10 +94,12 @@ class AccountsList extends Component {
             renderSeparator={this.renderSeparator}
             dataSource={this.asJson()}
             renderRow={(child) =>
-              <View style={styles.row}>
-                <Text style={styles.accountid}>{child.account}</Text>
-                <Text style={styles.accountname}>{child.name}</Text>
-              </View>
+              <TouchableHighlight onPress={() => this.onSelectRow(child)}>
+                <View style={styles.row}>
+                  <Text style={styles.accountid}>{child.account}</Text>
+                  <Text style={styles.accountname}>{child.name}</Text>
+                </View>
+              </TouchableHighlight>
             }
           />
         </ScrollView>
@@ -124,6 +133,10 @@ const styles = StyleSheet.create({
   row: {
     flexDirection: 'row', 
     padding: 5
+  },
+  defaultText: {
+    marginLeft: 8,
+    marginBottom: 8
   }
 });
 
